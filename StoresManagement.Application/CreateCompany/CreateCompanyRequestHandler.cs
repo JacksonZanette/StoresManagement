@@ -1,14 +1,21 @@
 ﻿using FluentResults;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using StoresManagement.Application.Extensions;
+using StoresManagement.Domain.Repositories;
 
 namespace StoresManagement.Application.CreateCompany;
 
-public class CreateCompanyRequestHandler : IRequestHandler<CreateCompanyRequest, Result<Guid>>
+public class CreateCompanyRequestHandler(ICompanyRepository companyRepository) : IRequestHandler<CreateCompanyRequest, Result<Guid>>
 {
-    public Task<Result<Guid>> Handle(CreateCompanyRequest request, CancellationToken cancellationToken) => throw new NotImplementedException();
+    public async Task<Result<Guid>> Handle(CreateCompanyRequest request, CancellationToken cancellationToken)
+    {
+        var validationResult = request.Validate();
+
+        if (!validationResult.IsValid)
+            return validationResult.ToFluentResult();
+
+        await companyRepository.CreateAsync(request.ToEntity(), cancellationToken);
+
+        return Result.Ok();
+    }
 }
