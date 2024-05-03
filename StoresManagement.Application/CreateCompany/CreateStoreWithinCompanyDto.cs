@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using StoresManagement.Domain.Models.Entities;
-using StoresManagement.Domain.Models.ValuedObjects;
+using StoresManagement.Domain.Models.ValueObjects;
 
 namespace StoresManagement.Application.CreateCompany;
 public record CreateStoreWithinCompanyDto(string Name, Address Address)

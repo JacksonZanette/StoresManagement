@@ -1,4 +1,4 @@
-﻿using StoresManagement.Domain.Models.ValuedObjects;
+﻿using StoresManagement.Domain.Models.ValueObjects;
 
 namespace StoresManagement.Domain.Models.Entities;
 

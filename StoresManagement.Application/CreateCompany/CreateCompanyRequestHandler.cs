@@ -5,7 +5,7 @@ using StoresManagement.Domain.Repositories;
 
 namespace StoresManagement.Application.CreateCompany;
 
-public class CreateCompanyRequestHandler(ICompanyRepository companyRepository) : IRequestHandler<CreateCompanyRequest, Result<Guid>>
+public class CreateCompanyRequestHandler(ICompaniesRepository companiesRepository) : IRequestHandler<CreateCompanyRequest, Result<Guid>>
 {
     public async Task<Result<Guid>> Handle(CreateCompanyRequest request, CancellationToken cancellationToken)
     {
@@ -16,7 +16,7 @@ public class CreateCompanyRequestHandler(ICompanyRepository companyRepository) :
 
         var company = request.ToEntity();
 
-        await companyRepository.CreateAsync(company, cancellationToken);
+        await companiesRepository.AddAsync(company, cancellationToken);
 
         return Result.Ok(company.Id);
     }
