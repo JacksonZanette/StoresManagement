@@ -14,8 +14,10 @@ public class CreateCompanyRequestHandler(ICompanyRepository companyRepository) :
         if (!validationResult.IsValid)
             return validationResult.ToFluentResult();
 
-        await companyRepository.CreateAsync(request.ToEntity(), cancellationToken);
+        var company = request.ToEntity();
 
-        return Result.Ok();
+        await companyRepository.CreateAsync(company, cancellationToken);
+
+        return Result.Ok(company.Id);
     }
 }

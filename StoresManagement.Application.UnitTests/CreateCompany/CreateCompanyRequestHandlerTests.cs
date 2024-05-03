@@ -25,6 +25,8 @@ public class CreateCompanyRequestHandlerTests
         //Assert
         Assert.True(result.IsFailed);
         Assert.Collection(result.Errors, error => Assert.Equal("'Name' must not be empty.", error.Message));
+
+        _autoMocker.GetMock<ICompanyRepository>().Verify(e => e.CreateAsync(It.IsAny<Domain.Models.Entities.Company>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact(DisplayName = "With invalid store")]
@@ -50,6 +52,8 @@ public class CreateCompanyRequestHandlerTests
         Assert.Collection(result.Errors,
             error => Assert.Equal("'Name' must not be empty.", error.Message),
             error => Assert.Equal("'Address' must not be empty.", error.Message));
+
+        _autoMocker.GetMock<ICompanyRepository>().Verify(e => e.CreateAsync(It.IsAny<Domain.Models.Entities.Company>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact(DisplayName = "With invalid store address")]
@@ -78,6 +82,8 @@ public class CreateCompanyRequestHandlerTests
             error => Assert.Equal("'Region Name' must not be empty.", error.Message),
             error => Assert.Equal("'Postal Code' must not be empty.", error.Message),
             error => Assert.Equal("'Country' must not be empty.", error.Message));
+
+        _autoMocker.GetMock<ICompanyRepository>().Verify(e => e.CreateAsync(It.IsAny<Domain.Models.Entities.Company>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact(DisplayName = "Without stores")]
@@ -92,6 +98,7 @@ public class CreateCompanyRequestHandlerTests
 
         //Assert
         Assert.True(result.IsSuccess);
+        Assert.NotEqual(Guid.Empty, result.Value);
 
         _autoMocker.GetMock<ICompanyRepository>().Verify(e => e.CreateAsync(It.Is<Domain.Models.Entities.Company>
             (e => e.Id != Guid.Empty &&
@@ -127,6 +134,7 @@ public class CreateCompanyRequestHandlerTests
 
         //Assert
         Assert.True(result.IsSuccess);
+        Assert.NotEqual(Guid.Empty, result.Value);
 
         var storeRequest = request.Stores!.First();
 
