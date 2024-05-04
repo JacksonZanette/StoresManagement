@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using Moq;
 using Moq.AutoMock;
-using StoresManagement.Application.CreateStore;
+using StoresManagement.Application.Stores.CreateStore;
 using StoresManagement.Domain.Models.Entities;
 using StoresManagement.Domain.Models.ValueObjects;
 using StoresManagement.Domain.Repositories;

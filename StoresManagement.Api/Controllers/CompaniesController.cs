@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using StoresManagement.Application.CreateCompany;
-using StoresManagement.Application.GetCompany;
-using StoresManagement.Application.ListCompanies;
+using StoresManagement.Application.Companies.CreateCompany;
+using StoresManagement.Application.Companies.GetCompany;
+using StoresManagement.Application.Companies.ListCompanies;
 
 namespace StoresManagement.Api.Controllers;
 

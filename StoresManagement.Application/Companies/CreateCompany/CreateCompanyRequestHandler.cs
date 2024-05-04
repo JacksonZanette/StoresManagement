@@ -3,7 +3,7 @@ using MediatR;
 using StoresManagement.Application.Extensions;
 using StoresManagement.Domain.Repositories;
 
-namespace StoresManagement.Application.CreateCompany;
+namespace StoresManagement.Application.Companies.CreateCompany;
 
 public class CreateCompanyRequestHandler(ICompaniesRepository companiesRepository) : IRequestHandler<CreateCompanyRequest, Result<Guid>>
 {

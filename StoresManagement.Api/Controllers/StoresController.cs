@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using StoresManagement.Application.CreateStore;
+using StoresManagement.Application.Stores.CreateStore;
+using StoresManagement.Application.Stores.GetStore;
+using StoresManagement.Application.Stores.ListStores;
 
 namespace StoresManagement.Api.Controllers;
 
@@ -18,17 +20,17 @@ public class StoresController(IMediator mediator) : ControllerBase
             : BadRequest(result.Errors);
     }
 
-    //[HttpGet("{id}", Name = "Get")]
-    //public async Task<IActionResult> Get([FromRoute] Guid id)
-    //{
-    //    var result = await mediator.Send(new GetCompanyQueryRequest(id));
+    [HttpGet(Name = "List stores")]
+    public async Task<IEnumerable<GetStoreResponse>> List()
+        => await mediator.Send(new ListStoresQueryRequest());
 
-    //    return result is not null
-    //        ? Ok(result)
-    //        : NotFound();
-    //}
+    [HttpGet("{id}", Name = "Get")]
+    public async Task<IActionResult> Get([FromRoute] Guid id)
+    {
+        var result = await mediator.Send(new GetStoreQueryRequest(id));
 
-    //[HttpGet(Name = "List")]
-    //public async Task<IEnumerable<GetCompanyResponse>> List()
-    //    => await mediator.Send(new ListCompaniesQueryRequest());
+        return result is not null
+            ? Ok(result)
+            : NotFound();
+    }
 }

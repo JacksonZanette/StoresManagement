@@ -1,6 +1,6 @@
 ﻿using StoresManagement.Domain.Models.Entities;
 
-namespace StoresManagement.Application.GetCompany;
+namespace StoresManagement.Application.Companies.GetCompany;
 public sealed record GetCompanyResponse(Guid Id, string Name, IEnumerable<StoreWithinCompanyDto> Stores)
 {
     public static GetCompanyResponse FromEntity(Company company)

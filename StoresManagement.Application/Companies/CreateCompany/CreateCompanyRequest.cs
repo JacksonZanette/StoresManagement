@@ -4,7 +4,7 @@ using FluentValidation.Results;
 using MediatR;
 using StoresManagement.Domain.Models.Entities;
 
-namespace StoresManagement.Application.CreateCompany;
+namespace StoresManagement.Application.Companies.CreateCompany;
 public record CreateCompanyRequest(string? Name, IEnumerable<CreateStoreWithinCompanyDto>? Stores = default) : IRequest<Result<Guid>>
 {
     internal ValidationResult Validate() => new Validator().Validate(this);

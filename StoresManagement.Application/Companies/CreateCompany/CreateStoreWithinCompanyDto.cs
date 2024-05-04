@@ -2,7 +2,7 @@
 using StoresManagement.Domain.Models.Entities;
 using StoresManagement.Domain.Models.ValueObjects;
 
-namespace StoresManagement.Application.CreateCompany;
+namespace StoresManagement.Application.Companies.CreateCompany;
 public record CreateStoreWithinCompanyDto(string Name, Address Address)
 {
     internal Store ToEntity(Guid companyId)

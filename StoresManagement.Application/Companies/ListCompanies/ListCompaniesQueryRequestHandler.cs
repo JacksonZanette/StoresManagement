@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using StoresManagement.Application.GetCompany;
+using StoresManagement.Application.Companies.GetCompany;
 using StoresManagement.Domain.Repositories;
 
-namespace StoresManagement.Application.ListCompanies;
+namespace StoresManagement.Application.Companies.ListCompanies;
 
 internal class ListCompaniesQueryRequestHandler(ICompaniesRepository repository)
     : IRequestHandler<ListCompaniesQueryRequest, IEnumerable<GetCompanyResponse>>
