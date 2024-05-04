@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using Moq;
 using Moq.AutoMock;
-using StoresManagement.Application.Companies.CreateCompany;
+using StoresManagement.Application.Companies.Create;
 using StoresManagement.Domain.Repositories;
 
 namespace StoresManagement.Application.UnitTests.CreateCompany;

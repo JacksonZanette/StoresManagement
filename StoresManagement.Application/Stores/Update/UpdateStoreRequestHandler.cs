@@ -2,7 +2,7 @@
 using MediatR;
 using StoresManagement.Domain.Repositories;
 
-namespace StoresManagement.Application.Stores.UpdateStore;
+namespace StoresManagement.Application.Stores.Update;
 
 internal class UpdateStoreRequestHandler(IStoresRepository storesRepository, ICompaniesRepository companiesRepository)
     : IRequestHandler<UpdateStoreRequest, Result>

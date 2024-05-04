@@ -3,7 +3,7 @@ using MediatR;
 using StoresManagement.Application.Extensions;
 using StoresManagement.Domain.Repositories;
 
-namespace StoresManagement.Application.Stores.CreateStore;
+namespace StoresManagement.Application.Stores.Create;
 
 public class CreateStoreRequestHandler(ICompaniesRepository companiesRepository, IStoresRepository storesRepository)
     : IRequestHandler<CreateStoreRequest, Result<Guid>>

@@ -1,7 +1,7 @@
 ﻿using StoresManagement.Domain.Models.Entities;
 using StoresManagement.Domain.Models.ValueObjects;
 
-namespace StoresManagement.Application.Stores.GetStore;
+namespace StoresManagement.Application.Stores.Get;
 public sealed record GetStoreResponse(Guid Id, Guid CompanyId, string Name, Address Address)
 {
     public static GetStoreResponse FromEntity(Store store)

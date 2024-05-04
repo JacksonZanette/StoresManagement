@@ -10,7 +10,7 @@ public interface IStoresRepository
 
     Task<Store?> GetAsync(Guid id, CancellationToken cancellationToken = default);
 
-    Task<IEnumerable<Store>> GetAsync(CancellationToken cancellationToken = default);
+    Task<IEnumerable<Store>> GetAllAsync(CancellationToken cancellationToken = default);
 
     Task UpdateAsync(Store store, CancellationToken cancellationToken = default);
 }

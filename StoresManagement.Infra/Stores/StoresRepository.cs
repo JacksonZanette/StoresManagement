@@ -12,7 +12,7 @@ internal class StoresRepository(StoresManagementContext context) : IStoresReposi
         await context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<Store>> GetAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Store>> GetAllAsync(CancellationToken cancellationToken = default)
         => await context.Stores.ToArrayAsync(cancellationToken);
 
     public async Task<Store?> GetAsync(Guid id, CancellationToken cancellationToken = default)

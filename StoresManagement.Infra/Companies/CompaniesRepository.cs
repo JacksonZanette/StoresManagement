@@ -18,6 +18,6 @@ internal class CompaniesRepository(StoresManagementContext context) : ICompanies
     public async Task<Company?> GetAsync(Guid id, CancellationToken cancellationToken = default)
         => await context.Companies.Include(e => e.Stores).FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
 
-    public async Task<IEnumerable<Company>> GetAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Company>> GetAllAsync(CancellationToken cancellationToken = default)
         => await context.Companies.Include(e => e.Stores).ToArrayAsync(cancellationToken);
 }

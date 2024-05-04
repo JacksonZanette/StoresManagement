@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using StoresManagement.Application.Stores.CreateStore;
-using StoresManagement.Application.Stores.DeleteStore;
-using StoresManagement.Application.Stores.GetStore;
-using StoresManagement.Application.Stores.ListStores;
-using StoresManagement.Application.Stores.UpdateStore;
+using StoresManagement.Application.Stores.Create;
+using StoresManagement.Application.Stores.Delete;
+using StoresManagement.Application.Stores.Get;
+using StoresManagement.Application.Stores.GetAll;
+using StoresManagement.Application.Stores.Update;
 
 namespace StoresManagement.Api.Controllers;
 
@@ -22,9 +22,9 @@ public class StoresController(IMediator mediator) : ControllerBase
             : BadRequest(result.Errors);
     }
 
-    [HttpGet(Name = "List stores")]
-    public async Task<IEnumerable<GetStoreResponse>> List()
-        => await mediator.Send(new ListStoresQueryRequest());
+    [HttpGet(Name = "Get all stores")]
+    public async Task<IEnumerable<GetStoreResponse>> GetAll()
+        => await mediator.Send(new GetAllStoresQueryRequest());
 
     [HttpGet("{id}", Name = "Get store")]
     public async Task<IActionResult> Get([FromRoute] Guid id)

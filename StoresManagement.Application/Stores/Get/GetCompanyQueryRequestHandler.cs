@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using StoresManagement.Domain.Repositories;
 
-namespace StoresManagement.Application.Stores.GetStore;
+namespace StoresManagement.Application.Stores.Get;
 
 internal class GetStoreQueryRequestHandler(IStoresRepository repository) : IRequestHandler<GetStoreQueryRequest, GetStoreResponse?>
 {

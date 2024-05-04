@@ -5,7 +5,7 @@ using MediatR;
 using StoresManagement.Domain.Models.Entities;
 using StoresManagement.Domain.Models.ValueObjects;
 
-namespace StoresManagement.Application.Stores.CreateStore;
+namespace StoresManagement.Application.Stores.Create;
 public record CreateStoreRequest(Guid? CompanyId, string? Name, Address? Address) : IRequest<Result<Guid>>
 {
     internal ValidationResult Validate() => new Validator().Validate(this);
@@ -29,11 +29,11 @@ public record CreateStoreRequest(Guid? CompanyId, string? Name, Address? Address
                 .NotNull()
                 .ChildRules(e =>
                 {
-                    e.RuleFor(x => x.StreetName).NotEmpty();
-                    e.RuleFor(x => x.CityName).NotEmpty();
-                    e.RuleFor(x => x.RegionName).NotEmpty();
-                    e.RuleFor(x => x.PostalCode).NotEmpty();
-                    e.RuleFor(x => x.Country).NotEmpty();
+                    e.RuleFor(x => x!.StreetName).NotEmpty();
+                    e.RuleFor(x => x!.CityName).NotEmpty();
+                    e.RuleFor(x => x!.RegionName).NotEmpty();
+                    e.RuleFor(x => x!.PostalCode).NotEmpty();
+                    e.RuleFor(x => x!.Country).NotEmpty();
                 });
         }
     }

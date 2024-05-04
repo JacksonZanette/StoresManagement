@@ -8,7 +8,7 @@ public interface ICompaniesRepository
 
     Task<Company?> GetAsync(Guid id, CancellationToken cancellationToken = default);
 
-    Task<IEnumerable<Company>> GetAsync(CancellationToken cancellationToken = default);
+    Task<IEnumerable<Company>> GetAllAsync(CancellationToken cancellationToken = default);
 
     Task<bool> Exists(Guid id, CancellationToken cancellationToken = default);
 }

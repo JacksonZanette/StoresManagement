@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using StoresManagement.Application.Companies.CreateCompany;
-using StoresManagement.Application.Companies.GetCompany;
-using StoresManagement.Application.Companies.ListCompanies;
+using StoresManagement.Application.Companies.Create;
+using StoresManagement.Application.Companies.Get;
+using StoresManagement.Application.Companies.GetAll;
 
 namespace StoresManagement.Api.Controllers;
 
@@ -20,6 +20,10 @@ public class CompaniesController(IMediator mediator) : ControllerBase
             : BadRequest(result.Errors);
     }
 
+    [HttpGet(Name = "Get all companies")]
+    public async Task<IEnumerable<GetCompanyResponse>> GetAll()
+        => await mediator.Send(new GetAllCompaniesQueryRequest());
+
     [HttpGet("{id}", Name = "Get company")]
     public async Task<IActionResult> Get([FromRoute] Guid id)
     {
@@ -29,8 +33,4 @@ public class CompaniesController(IMediator mediator) : ControllerBase
             ? Ok(result)
             : NotFound();
     }
-
-    [HttpGet(Name = "List companies")]
-    public async Task<IEnumerable<GetCompanyResponse>> List()
-        => await mediator.Send(new ListCompaniesQueryRequest());
 }

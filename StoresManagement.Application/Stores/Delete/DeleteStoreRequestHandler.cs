@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StoresManagement.Application.Stores.DeleteStore;
+namespace StoresManagement.Application.Stores.Delete;
 
 internal class DeleteStoreRequestHandler(IStoresRepository repository) : IRequestHandler<DeleteStoreRequest>
 {
