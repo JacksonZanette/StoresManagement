@@ -1,14 +1,15 @@
 ﻿using MediatR;
+using StoresManagement.Application.GetCompany;
 using StoresManagement.Domain.Repositories;
 
 namespace StoresManagement.Application.ListCompanies;
 
-internal class ListCompaniesQueryRequestHandler(ICompaniesRepository companiesRepository)
-    : IRequestHandler<ListCompaniesQueryRequest, IEnumerable<CompanyResponseDto>>
+internal class ListCompaniesQueryRequestHandler(ICompaniesRepository repository)
+    : IRequestHandler<ListCompaniesQueryRequest, IEnumerable<GetCompanyResponse>>
 {
-    public async Task<IEnumerable<CompanyResponseDto>> Handle(ListCompaniesQueryRequest request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<GetCompanyResponse>> Handle(ListCompaniesQueryRequest request, CancellationToken cancellationToken)
     {
-        var companies = await companiesRepository.GetAsync(cancellationToken);
-        return companies.Select(e => e.ToResponseDto());
+        var companies = await repository.GetAsync(cancellationToken);
+        return companies.Select(GetCompanyResponse.FromEntity);
     }
 }

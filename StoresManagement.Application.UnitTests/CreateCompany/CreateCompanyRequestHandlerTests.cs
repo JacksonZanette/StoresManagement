@@ -24,8 +24,7 @@ public class CreateCompanyRequestHandlerTests
 
         //Assert
         Assert.True(result.IsFailed);
-        var error = Assert.Single(result.Errors);
-        Assert.Equal("'Name' must not be empty.", error.Message);
+        Assert.Equal("'Name' must not be empty.", Assert.Single(result.Errors).Message);
 
         _autoMocker.GetMock<ICompaniesRepository>().Verify(e => e.AddAsync(It.IsAny<Domain.Models.Entities.Company>(), It.IsAny<CancellationToken>()), Times.Never);
     }

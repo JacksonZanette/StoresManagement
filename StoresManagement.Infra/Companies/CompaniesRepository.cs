@@ -12,6 +12,12 @@ internal class CompaniesRepository(StoresManagementContext context) : ICompanies
         await context.SaveChangesAsync(cancellationToken);
     }
 
+    public async Task<bool> Exists(Guid id, CancellationToken cancellationToken = default)
+        => await context.Companies.AnyAsync(e => e.Id == id, cancellationToken);
+
+    public async Task<Company?> GetAsync(Guid id, CancellationToken cancellationToken = default)
+        => await context.Companies.Include(e => e.Stores).FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+
     public async Task<IEnumerable<Company>> GetAsync(CancellationToken cancellationToken = default)
         => await context.Companies.Include(e => e.Stores).ToArrayAsync(cancellationToken);
 }

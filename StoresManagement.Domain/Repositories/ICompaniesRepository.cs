@@ -6,5 +6,9 @@ public interface ICompaniesRepository
 {
     Task AddAsync(Company company, CancellationToken cancellationToken = default);
 
+    Task<Company?> GetAsync(Guid id, CancellationToken cancellationToken = default);
+
     Task<IEnumerable<Company>> GetAsync(CancellationToken cancellationToken = default);
+
+    Task<bool> Exists(Guid id, CancellationToken cancellationToken = default);
 }

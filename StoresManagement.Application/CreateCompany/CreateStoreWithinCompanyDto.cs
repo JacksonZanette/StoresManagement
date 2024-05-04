@@ -19,8 +19,8 @@ public record CreateStoreWithinCompanyDto(string Name, Address Address)
         public Validator()
         {
             RuleFor(e => e.Name).NotEmpty();
-            RuleFor(e => e.Address).NotNull();
             RuleFor(e => e.Address)
+                .NotNull()
                 .ChildRules(e =>
                 {
                     e.RuleFor(x => x.StreetName).NotEmpty();
@@ -28,8 +28,7 @@ public record CreateStoreWithinCompanyDto(string Name, Address Address)
                     e.RuleFor(x => x.RegionName).NotEmpty();
                     e.RuleFor(x => x.PostalCode).NotEmpty();
                     e.RuleFor(x => x.Country).NotEmpty();
-                })
-                .When(e => e.Address is not null);
+                });
         }
     }
 }

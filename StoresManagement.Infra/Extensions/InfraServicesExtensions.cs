@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StoresManagement.Domain.Repositories;
 using StoresManagement.Infra.Companies;
+using StoresManagement.Infra.Stores;
 using System.Reflection;
 
 namespace StoresManagement.Infra.Extensions;
@@ -28,7 +29,8 @@ public static class InfraServicesExtensions
 
         return services
             .AddDbContext<StoresManagementContext>(options => options.UseNpgsql(connectionString))
-            .AddScoped<ICompaniesRepository, CompaniesRepository>();
+            .AddScoped<ICompaniesRepository, CompaniesRepository>()
+            .AddScoped<IStoresRepository, StoresRepository>();
     }
 
     private static IApplicationBuilder UseDatabase(this IApplicationBuilder applicationBuilder)
