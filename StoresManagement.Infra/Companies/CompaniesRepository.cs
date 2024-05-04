@@ -1,9 +1,17 @@
-﻿using StoresManagement.Domain.Models.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using StoresManagement.Domain.Models.Entities;
 using StoresManagement.Domain.Repositories;
 
 namespace StoresManagement.Infra.Companies;
 
-internal class CompaniesRepository : ICompaniesRepository
+internal class CompaniesRepository(StoresManagementContext context) : ICompaniesRepository
 {
-    public Task AddAsync(Company company, CancellationToken cancellationToken) => throw new NotImplementedException();
+    public async Task AddAsync(Company company, CancellationToken cancellationToken = default)
+    {
+        await context.Companies.AddAsync(company, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<IEnumerable<Company>> GetAsync(CancellationToken cancellationToken = default)
+        => await context.Companies.Include(e => e.Stores).ToArrayAsync(cancellationToken);
 }

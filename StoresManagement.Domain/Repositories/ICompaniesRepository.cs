@@ -4,5 +4,7 @@ namespace StoresManagement.Domain.Repositories;
 
 public interface ICompaniesRepository
 {
-    Task AddAsync(Company company, CancellationToken cancellationToken);
+    Task AddAsync(Company company, CancellationToken cancellationToken = default);
+
+    Task<IEnumerable<Company>> GetAsync(CancellationToken cancellationToken = default);
 }

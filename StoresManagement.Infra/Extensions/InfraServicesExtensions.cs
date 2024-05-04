@@ -24,7 +24,7 @@ public static class InfraServicesExtensions
 
     private static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("AZURE_POSTGRESQL_CONNECTIONSTRING");
+        var connectionString = configuration["POSTGRESQLCONNSTR_AZURE_POSTGRESQL_CONNECTIONSTRING"];
 
         return services
             .AddDbContext<StoresManagementContext>(options => options.UseNpgsql(connectionString))
