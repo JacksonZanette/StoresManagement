@@ -23,8 +23,8 @@
     </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.2" />
     <PackageReference Include="System.Text.Encodings.Web" Version="8.0.0" />
-    <ProjectReference Include="..\StoresManagement.Application\StoresManagement.Application.csproj" />    
-    <ProjectReference Include="..\StoresManagement.Domain\StoresManagement.Domain.csproj" />
+    <ProjectReference Include="..\StoresManagement.Application\StoresManagement.Application.csproj" />
+    <ProjectReference Include="..\StoresManagement.Core\StoresManagement.Core.csproj" />
   </ItemGroup>
 
 </Project>
