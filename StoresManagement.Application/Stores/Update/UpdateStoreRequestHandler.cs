@@ -1,15 +1,16 @@
 ﻿using FluentResults;
 using MediatR;
-using StoresManagement.Domain.Repositories;
+using StoresManagement.Core.Common;
+using StoresManagement.Domain.Models.Entities;
 
 namespace StoresManagement.Application.Stores.Update;
 
-internal class UpdateStoreRequestHandler(IStoresRepository storesRepository, ICompaniesRepository companiesRepository)
+internal class UpdateStoreRequestHandler(IRepository<Store> storesRepository, IRepository<Company> companiesRepository)
     : IRequestHandler<UpdateStoreRequest, Result>
 {
     public async Task<Result> Handle(UpdateStoreRequest request, CancellationToken cancellationToken)
     {
-        var store = await storesRepository.GetAsync(request.Id, cancellationToken);
+        var store = await storesRepository.FindAsync(request.Id, cancellationToken);
 
         if (store is null)
             return Result.Fail("NotFound");
@@ -26,7 +27,8 @@ internal class UpdateStoreRequestHandler(IStoresRepository storesRepository, ICo
         store.CompanyId = request.CompanyId!.Value;
         store.Address = request.Address!;
 
-        await storesRepository.UpdateAsync(store, cancellationToken);
+        storesRepository.Update(store);
+        await storesRepository.CommitAsync(cancellationToken);
 
         return Result.Ok();
     }

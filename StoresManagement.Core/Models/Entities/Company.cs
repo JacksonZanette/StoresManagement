@@ -1,8 +1,9 @@
-﻿namespace StoresManagement.Domain.Models.Entities;
+﻿using StoresManagement.Core.Common;
 
-public sealed class Company
+namespace StoresManagement.Domain.Models.Entities;
+
+public sealed class Company : Entity
 {
-    public Guid Id { get; set; }
     public required string Name { get; set; }
 
     public HashSet<Store> Stores { get; set; } = [];

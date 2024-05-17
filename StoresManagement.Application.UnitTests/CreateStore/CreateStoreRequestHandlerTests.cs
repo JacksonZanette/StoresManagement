@@ -2,9 +2,9 @@
 using Moq;
 using Moq.AutoMock;
 using StoresManagement.Application.Stores.Create;
+using StoresManagement.Core.Common;
 using StoresManagement.Domain.Models.Entities;
 using StoresManagement.Domain.Models.ValueObjects;
-using StoresManagement.Domain.Repositories;
 
 namespace StoresManagement.Application.UnitTests.CreateStore;
 
@@ -31,8 +31,8 @@ public class CreateStoreRequestHandlerTests
             error => Assert.Equal("'Name' must not be empty.", error.Message),
             error => Assert.Equal("'Address' must not be empty.", error.Message));
 
-        _autoMocker.GetMock<ICompaniesRepository>().Verify(e => e.GetAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()), Times.Never);
-        _autoMocker.GetMock<IStoresRepository>().Verify(e => e.AddAsync(It.IsAny<Store>(), It.IsAny<CancellationToken>()), Times.Never);
+        _autoMocker.GetMock<IRepository<Company>>().Verify(e => e.FindAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()), Times.Never);
+        _autoMocker.GetMock<IRepository<Store>>().Verify(e => e.AddAsync(It.IsAny<Store>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact(DisplayName = "With invalid store address")]
@@ -55,8 +55,8 @@ public class CreateStoreRequestHandlerTests
             error => Assert.Equal("'Postal Code' must not be empty.", error.Message),
             error => Assert.Equal("'Country' must not be empty.", error.Message));
 
-        _autoMocker.GetMock<ICompaniesRepository>().Verify(e => e.GetAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()), Times.Never);
-        _autoMocker.GetMock<IStoresRepository>().Verify(e => e.AddAsync(It.IsAny<Store>(), It.IsAny<CancellationToken>()), Times.Never);
+        _autoMocker.GetMock<IRepository<Company>>().Verify(e => e.FindAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()), Times.Never);
+        _autoMocker.GetMock<IRepository<Store>>().Verify(e => e.AddAsync(It.IsAny<Store>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact(DisplayName = "When company doesn't exists")]
@@ -84,8 +84,8 @@ public class CreateStoreRequestHandlerTests
         Assert.Equal("The company id provided doesn't match with any existent company.",
             Assert.Single(result.Errors).Message);
 
-        _autoMocker.GetMock<ICompaniesRepository>().Verify(e => e.Exists(companyId, cancellationToken), Times.Once);
-        _autoMocker.GetMock<IStoresRepository>().Verify(e => e.AddAsync(It.IsAny<Store>(), It.IsAny<CancellationToken>()), Times.Never);
+        _autoMocker.GetMock<IRepository<Company>>().Verify(e => e.Exists(companyId, cancellationToken), Times.Once);
+        _autoMocker.GetMock<IRepository<Store>>().Verify(e => e.AddAsync(It.IsAny<Store>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact(DisplayName = "With valid data")]
@@ -105,7 +105,7 @@ public class CreateStoreRequestHandlerTests
 
         var cancellationToken = new CancellationToken();
 
-        _autoMocker.GetMock<ICompaniesRepository>().Setup(e => e.Exists(companyId, cancellationToken)).ReturnsAsync(true);
+        _autoMocker.GetMock<IRepository<Company>>().Setup(e => e.Exists(companyId, cancellationToken)).ReturnsAsync(true);
 
         //Act
         var result = await GetHandler().Handle(request, cancellationToken);
@@ -114,8 +114,8 @@ public class CreateStoreRequestHandlerTests
         Assert.True(result.IsSuccess);
         Assert.NotEqual(Guid.Empty, result.Value);
 
-        _autoMocker.GetMock<ICompaniesRepository>().Verify(e => e.Exists(companyId, cancellationToken), Times.Once);
-        _autoMocker.GetMock<IStoresRepository>().Verify(e => e.AddAsync(It.Is<Store>(e =>
+        _autoMocker.GetMock<IRepository<Company>>().Verify(e => e.Exists(companyId, cancellationToken), Times.Once);
+        _autoMocker.GetMock<IRepository<Store>>().Verify(e => e.AddAsync(It.Is<Store>(e =>
                 e.Id != Guid.Empty &&
                 e.CompanyId == companyId &&
                 e.Name == request.Name &&

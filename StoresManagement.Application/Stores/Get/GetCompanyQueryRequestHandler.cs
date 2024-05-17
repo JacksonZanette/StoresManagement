@@ -1,13 +1,14 @@
 ﻿using MediatR;
-using StoresManagement.Domain.Repositories;
+using StoresManagement.Core.Common;
+using StoresManagement.Domain.Models.Entities;
 
 namespace StoresManagement.Application.Stores.Get;
 
-internal class GetStoreQueryRequestHandler(IStoresRepository repository) : IRequestHandler<GetStoreQueryRequest, GetStoreResponse?>
+internal class GetStoreQueryRequestHandler(IRepository<Store> repository) : IRequestHandler<GetStoreQueryRequest, GetStoreResponse?>
 {
     public async Task<GetStoreResponse?> Handle(GetStoreQueryRequest request, CancellationToken cancellationToken)
     {
-        var Store = await repository.GetAsync(request.Id, cancellationToken);
+        var Store = await repository.FindAsync(request.Id, cancellationToken);
 
         return Store is not null
             ? GetStoreResponse.FromEntity(Store)

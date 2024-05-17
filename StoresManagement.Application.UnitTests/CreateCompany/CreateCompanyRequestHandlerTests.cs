@@ -2,7 +2,8 @@
 using Moq;
 using Moq.AutoMock;
 using StoresManagement.Application.Companies.Create;
-using StoresManagement.Domain.Repositories;
+using StoresManagement.Core.Common;
+using StoresManagement.Domain.Models.Entities;
 
 namespace StoresManagement.Application.UnitTests.CreateCompany;
 
@@ -26,7 +27,7 @@ public class CreateCompanyRequestHandlerTests
         Assert.True(result.IsFailed);
         Assert.Equal("'Name' must not be empty.", Assert.Single(result.Errors).Message);
 
-        _autoMocker.GetMock<ICompaniesRepository>().Verify(e => e.AddAsync(It.IsAny<Domain.Models.Entities.Company>(), It.IsAny<CancellationToken>()), Times.Never);
+        _autoMocker.GetMock<IRepository<Company>>().Verify(e => e.AddAsync(It.IsAny<Company>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact(DisplayName = "With invalid store")]
@@ -53,7 +54,7 @@ public class CreateCompanyRequestHandlerTests
             error => Assert.Equal("'Name' must not be empty.", error.Message),
             error => Assert.Equal("'Address' must not be empty.", error.Message));
 
-        _autoMocker.GetMock<ICompaniesRepository>().Verify(e => e.AddAsync(It.IsAny<Domain.Models.Entities.Company>(), It.IsAny<CancellationToken>()), Times.Never);
+        _autoMocker.GetMock<IRepository<Company>>().Verify(e => e.AddAsync(It.IsAny<Domain.Models.Entities.Company>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact(DisplayName = "With invalid store address")]
@@ -83,7 +84,7 @@ public class CreateCompanyRequestHandlerTests
             error => Assert.Equal("'Postal Code' must not be empty.", error.Message),
             error => Assert.Equal("'Country' must not be empty.", error.Message));
 
-        _autoMocker.GetMock<ICompaniesRepository>().Verify(e => e.AddAsync(It.IsAny<Domain.Models.Entities.Company>(), It.IsAny<CancellationToken>()), Times.Never);
+        _autoMocker.GetMock<IRepository<Company>>().Verify(e => e.AddAsync(It.IsAny<Domain.Models.Entities.Company>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact(DisplayName = "Without stores")]
@@ -100,7 +101,7 @@ public class CreateCompanyRequestHandlerTests
         Assert.True(result.IsSuccess);
         Assert.NotEqual(Guid.Empty, result.Value);
 
-        _autoMocker.GetMock<ICompaniesRepository>().Verify(e => e.AddAsync(It.Is<Domain.Models.Entities.Company>
+        _autoMocker.GetMock<IRepository<Company>>().Verify(e => e.AddAsync(It.Is<Domain.Models.Entities.Company>
             (e => e.Id != Guid.Empty &&
                 e.Name == request.Name &&
                 e.Stores.Count == 0), cancellationToken), Times.Once);
@@ -138,7 +139,7 @@ public class CreateCompanyRequestHandlerTests
 
         var storeRequest = request.Stores!.First();
 
-        _autoMocker.GetMock<ICompaniesRepository>().Verify(e => e.AddAsync(It.Is<Domain.Models.Entities.Company>
+        _autoMocker.GetMock<IRepository<Company>>().Verify(e => e.AddAsync(It.Is<Domain.Models.Entities.Company>
             (e => e.Id != Guid.Empty &&
                 e.Name == request.Name &&
                 e.Stores.Count == 1 &&

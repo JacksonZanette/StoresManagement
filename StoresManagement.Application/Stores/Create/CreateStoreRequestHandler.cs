@@ -1,11 +1,12 @@
 ﻿using FluentResults;
 using MediatR;
 using StoresManagement.Application.Extensions;
-using StoresManagement.Domain.Repositories;
+using StoresManagement.Core.Common;
+using StoresManagement.Domain.Models.Entities;
 
 namespace StoresManagement.Application.Stores.Create;
 
-public class CreateStoreRequestHandler(ICompaniesRepository companiesRepository, IStoresRepository storesRepository)
+public class CreateStoreRequestHandler(IRepository<Company> companiesRepository, IRepository<Store> storesRepository)
     : IRequestHandler<CreateStoreRequest, Result<Guid>>
 {
     public async Task<Result<Guid>> Handle(CreateStoreRequest request, CancellationToken cancellationToken)
@@ -21,6 +22,7 @@ public class CreateStoreRequestHandler(ICompaniesRepository companiesRepository,
         var store = request.ToEntity();
 
         await storesRepository.AddAsync(store, cancellationToken);
+        await storesRepository.CommitAsync(cancellationToken);
 
         return Result.Ok(store.Id);
     }
